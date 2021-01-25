@@ -25,6 +25,24 @@ namespace Api.Domicile.Drone.Management.Bussines
             return ListRoutes;
         }
 
+        public DTODroneRoute ValidatorByLetter(DTODroneRoute route, string letter)
+        {
+            switch (letter)
+            {
+                case "A":
+                    return MoveCardinalPointForward(route);
+                case "I":
+                    route.CardinalPosition = CardinalPointValidatorToTheLeft(route.CardinalPosition);
+                    break;
+                case "D":
+                    route.CardinalPosition = CardinalPointValidatorToTheRight(route.CardinalPosition);
+                    break;
+                default:
+                    break;
+            }
+            return route;
+        }
+
         public DTODroneRoute MapInitialRoute()
         {
             return new DTODroneRoute()
@@ -33,6 +51,23 @@ namespace Api.Domicile.Drone.Management.Bussines
                 XPosition = 0,
                 YPosition = 0
             };
+        }
+
+        public string CardinalPointValidatorToTheRight(string cardinalPoint)
+        {
+            switch (cardinalPoint)
+            {
+                case "N":
+                    return "E";
+                case "E":
+                    return "S";
+                case "S":
+                    return "E";
+                case "O":
+                    return "N";
+                default: return null;
+            }
+
         }
 
         public DTODroneRoute MoveCardinalPointForward(DTODroneRoute route)
